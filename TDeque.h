@@ -1,5 +1,5 @@
-#ifndef TDLLIST_H
-#define TDLLIST_H
+#ifndef TDEQUE_H
+#define TDEQUE_H
 
 #include <iostream>
 
@@ -9,23 +9,25 @@ template <typename T>
 class Node {
         public:
                 T data;
-                Node* next;
-                Node* prev;
+                Node<T>* next;
+                Node<T>* prev;
 };
 
 template <typename T>
-class DLList {
+class Deque {
         private:
                 Node<T>* head;
                 Node<T>* tail;
+		int size;
         public: 
-                DLList() {
+                Deque() {
                         head = nullptr;
                         tail = nullptr;
+			size = 0;
                 }
 
 
-                void insertHead(Node<T>* x) {
+                void EnqueueAtHead(Node<T>* x) {
                         if (head == nullptr) {
                                 head = tail = x;  // head and tail are pointers so they store the address of x
                                 x->prev = nullptr;
@@ -37,10 +39,30 @@ class DLList {
                                 head->prev = x;   // old head(node) points to the current head, because head holds the address of the old head
                                 head = x;   // update head
                         }
+			size++;
                 }
 
 
-                void insertTail(Node<T>* x) {
+		void DequeueFromHead() {
+                        if (head == nullptr) {
+                                cout << "The Doubly-Linked List is empty" << endl;
+                                return;
+                        }
+                        Node<T>* temp = head; // outside if statement so in both cases temp is deleted afterwards.
+                        if (head == tail) {
+                                head = tail = nullptr;
+				size = 0;
+                        }
+                        else {
+                                head = head->next;  // update head to next in line.
+                                head->prev = nullptr;
+                        }
+                         delete temp;
+			 size--;
+                }
+
+
+                void EnqueueAtTail(Node<T>* x) {
                         if (tail == nullptr) {
                                 head = tail = x;  // if the list is empty just add the new node, which head and tail will be pointing to
                                 x->next = nullptr;
@@ -52,27 +74,11 @@ class DLList {
                                 tail->next = x; // old tail which is the address of the last node will now point to the new tail, which is the node x just added.
                                 tail = x;
                         }
+			size++;
                 }
 
 
-                void delHead() {
-                        if (head == nullptr) {
-                                cout << "The Doubly-Linked List is empty" << endl;
-                                return;
-                        }
-                        Node<T>* temp = head; // outside if statement so in both cases temp is deleted afterwards.
-                        if (head == tail) {
-                                head = tail = nullptr;
-                        }
-                        else {
-                                head = head->next;  // update head to next in line.
-                                head->prev = nullptr;
-                        }
-                         delete temp;
-                }
-
-
-                void delTail() {
+                void DequeueFromTail() {
                         if (tail == nullptr) {
                                 cout << "The Doubly-Linked List is empty" << endl;
                                 return;
@@ -87,10 +93,24 @@ class DLList {
                         }
 
                         delete temp;
-                } 
+			size--;
+                }
 
 
-                void traverse() {
+		void getSize() {
+			cout << "The size of the Deque is " << size << endl;;
+		}	
+
+		void isEmpty() {
+			if (head == nullptr) {
+				cout << "The Deque is empty" << endl;
+			}
+			else {
+				cout << "The Deque is not empty" << endl;
+			}
+		}
+
+                void display() {
                         if (head == nullptr) {
                                 cout << "The Doubly Linked List is empty" << endl;
                         }
@@ -105,7 +125,7 @@ class DLList {
                 }
 
 
-                ~DLList() {
+                ~Deque() {
                         Node<T>* curr = head;
                         while (curr != nullptr) {
                                 Node<T>* temp = curr;
