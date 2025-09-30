@@ -51,7 +51,6 @@ class Deque {
                         Node<T>* temp = head; // outside if statement so in both cases temp is deleted afterwards.
                         if (head == tail) {
                                 head = tail = nullptr;
-				size = 0;
                         }
                         else {
                                 head = head->next;  // update head to next in line.
