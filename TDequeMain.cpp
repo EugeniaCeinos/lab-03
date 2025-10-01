@@ -5,11 +5,10 @@ using namespace std;
 
 int main() {
         int choice;
-        int item;
+        TTT item;
 
-        Deque<int>* D = new Deque<int>();
-        Node<int>* x; // Because templates are resolved at compile time, not runtime; so you neeed to say which data type right here, you can't say T and let the program figure out, because that would be at runtime.
-
+        Deque<TTT>* D = new Deque<TTT>();
+        Node<TTT>* x;
         do {
                 cout << "-----------------------" << endl;
                         D->display();
@@ -32,7 +31,7 @@ int main() {
                         case 1: 
 				cout << "Enter data item (integer) to be enqueued at the head: ";
                                 cin >> item;
-                                x = new Node<int>;
+                                x = new Node<TTT>;
                                 x->data = item;
                                 x->next = nullptr;
                                 x->prev = nullptr;
@@ -46,7 +45,7 @@ int main() {
                         case 3: 
 				cout << "Enter data item (integer) to be enqueued at the tail: ";
                                 cin >> item;
-                                x = new Node<int>;
+                                x = new Node<TTT>;
                                 x->data = item;
                                 x->next = nullptr;
                                 x->prev = nullptr;
